@@ -23,6 +23,7 @@ model User {
 
   posts     Post[]
   comments  Comment[]
+  likes     Like[]
 
   createdAt DateTime @default(now())
 }
@@ -37,6 +38,8 @@ model Post {
   author    User     @relation(fields: [authorId], references: [id])
 
   comments  Comment[]
+  likes     Like[]
+  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -54,3 +57,15 @@ model Comment {
   createdAt DateTime @default(now())
 }
 
+model Like{
+  id       Int      @id @default(autoincrement())
+  
+  postId    Int
+  userId    Int
+
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  @@unique([postId, userId]) // Ensure a user can like a post only once
+}

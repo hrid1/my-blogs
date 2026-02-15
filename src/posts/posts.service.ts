@@ -36,6 +36,9 @@ export class PostsService {
             name: true,
           },
         },
+       _count: {
+        select: {likes: true}
+       },
         comments: true,
       },
     });
@@ -51,6 +54,12 @@ export class PostsService {
             email: true,
           },
         },
+
+        _count: {
+          select: { likes: true , comments: true},
+        },
+        
+        likes: true,
         comments: true,
       },
     });
