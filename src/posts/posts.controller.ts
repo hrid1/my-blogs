@@ -45,6 +45,8 @@ export class PostsController {
   @Delete(':id')
   delete(@Req() req: any, @Param('id') postId: number) {
     const userId = req.user.userId;
-    return this.postsService.delete(postId, userId);
+    const role = req.user.role;
+    // or  const {userId, role} = req.user;
+    return this.postsService.delete(postId, userId, role);
   }
 }

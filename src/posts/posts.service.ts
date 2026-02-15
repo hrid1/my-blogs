@@ -93,7 +93,7 @@ export class PostsService {
     };
   }
 
-  async delete(postId: number, userId: number) {
+  async delete(postId: number, userId: number, role: string) {
     const post = await this.prisma.post.findUnique({
       where: { id: postId },
     });
@@ -102,7 +102,7 @@ export class PostsService {
       throw new NotFoundException('Post not found');
     }
 
-    if (post.authorId !== userId) {
+    if (post.authorId !== userId && role !== 'admin') {
       throw new ForbiddenException('Unauthorized');
     }
 
